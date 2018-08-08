@@ -24,6 +24,28 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get('/api/timestamp/:date_string', (req, res) => {
+  switch(typeof req.params.date_string) {
+    case "string":
+      if(req.params.date_string === "") {
+           var date = new Date();
+           res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+         }else {
+           if(new Date(req.params.date_string) !== "Invalid Date") {
+              var date = new Date(req.params.date_string);
+              res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+              }else {
+                res.json({"error" : "Invalid Date" });
+              }
+         }
+    case "number":
+      var date = new Date(req.params.date_string);
+      res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+    default:
+      res.send("Input must be an integer or valid date string, pls follow the index's instruction");
+      break;
+         }
+});
 
 
 // listen for requests :)
