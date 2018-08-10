@@ -6,6 +6,21 @@ var express = require('express');
 var app = express();
 var moment = require('moment');
 
+//list input format
+const formats = [
+        "X",
+        "YYYY-MM-D",
+        "D-MM-YYYY",
+        "MMMM D, YYYY",
+        "MMMM D YYYY",
+        "MMM D, YYYY",
+        "MMM D YYYY",
+        "D MMMM YYYY",
+        "D MMMM YY",
+        "D MMM YYYY",
+        "D MMM YY",
+];
+
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
@@ -21,22 +36,21 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
+// "say hello"
+// timestamp microservice refer to user-SehrOne(github: https://github.com/SehrOne/Timestamp-Microservice/blob/master/app/parseTime.js) -
+// used moment.js
 app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+  res.json({greeting: 'Hello, Welcome!'});
 });
 
-app.get('/api/timestamp/:date_string', (req, res) => {
-  if(moment(req.params.date_string).isValid() !== 'Invalid date' ) {
-       var date = new Date(req.params.date_string);
-       res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+app.get("/api/timestamp/:date_string", (req, res) => {
+  var date = moment(req.params.date_string, formats);
+  if(date.isValid()) {
+     var unixDate = date.format("X") * 1000;
+     var naturalDate = date.toDate();
+     res.json({"unix": unixDate, "utc": naturalDate.toUTCString()});
      }else {
-       if(parseInt(req.params.date_string) !== 'NaN') {
-          var date = parseInt(req.params.date_string);
-          date = moment(date).unix();
-          res.json({"unix": 11, "utc": 22});
-          }else {
-           res.send({"unix": 11, "utc": "Invalid Date"});
-          }
+      res.json({"unix": null, "utc": "Invalid Date"});
      }
 });
 

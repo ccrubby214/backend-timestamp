@@ -17,15 +17,39 @@
         <ol class="user-stories">
           
           <li>The API endpoint is <code>https://colossal-fountain.glitch.me/api/timestamp/:date_string</code></li>
-          <li>A date string is valid if can be successfully parsed by <code>new Date(date_string)</code>.<br>
-          Note that the unix timestamp needs to be an <strong>integer</strong> (not a string) specifying <strong>milliseconds</strong>.<br> 
-          The Service will use date strings compliant with ISO-8601 (e.g. <code>"2016-11-20"</code>) because this will ensure an UTC timestamp.</li>
-          <li>If the date string is <strong>empty</strong>, it will trigger <code>new Date()</code>, i.e. the service uses the current timestamp.</li>
-          <li>If the date string is <strong>valid</strong> the api returns a JSON having the structure:<br><code>{"unix": &lt;date.getTime()&gt;, "utc" : &lt;date.toUTCString()&gt; }</code><br>
-            e.g. <code>{"unix": 1479663089000 ,"utc": "Sun, 20 Nov 2016 17:31:29 GMT"}</code></li>
-          <li>If the date string is <strong>invalid</strong> the api returns a JSON: <br>
-              <code>{"unix": null, "utc" : "Invalid Date" }</code>.
+          <li>A valid date string obey the format as natural date or unixstamp as below, and then api returns a JSON having the structure: e.g. {"unix": 1479663089000 ,"utc": "Sun, 20 Nov 2016 17:31:29 GMT"}
+            <ul>
+              <li class = "index"><strong>Natural Date Example:</strong>
+              </li>  
+              <li>2016-12-02
+              </li>
+              <li>02-12-2016
+              </li> 
+              <li>December 2, 2016
+              </li> 
+              <li>December 2 2016
+              </li> 
+              <li>Dec 2, 2016
+              </li> 
+              <li>Dec 2 2016
+              </li> 
+              <li>2 December 2016
+              </li> 
+              <li>2 December 16
+              </li> 
+              <li>2 Dec 2016
+              </li>
+              <li>2 Dec 16
+              </li>
+              <li class = "index"><strong>Unixtimestamp Example:</strong>
+              </li> 
+              <li>1450137600
+              </li>  
+            </ul>  
           </li>
+          <li>if input a <strong>invalid</strong> date string or <strong>empty</strong>, the api returns a JSON: 
+{"unix": null, "utc" : "Invalid Date" }
+          </li>  
         </ol>
 
         <h3>Example Usage:</h3>

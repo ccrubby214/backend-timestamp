@@ -38,7 +38,9 @@ ol {
 	list-style-position: outside;
 }
 ul {
-	list-style-type: none;
+  margin-top: 2em;
+  margin-bottom: 2em;
+	list-style-type: outside;
 }
 
 li {
@@ -50,4 +52,8 @@ li {
 
 a {
 	color: #2574A9;
+}
+
+.index {
+  list-style-type: none;
 }
