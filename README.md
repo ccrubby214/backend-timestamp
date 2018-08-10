@@ -4,7 +4,8 @@
 
 ### How to use:
 
-Please follow the App index's user story.
+Please follow the App index's user story:
+[https://colossal-fountain.glitch.me](https://colossal-fountain.glitch.me)
 
 
 ### How to remix:
