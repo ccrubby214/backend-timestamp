@@ -4,6 +4,7 @@
 // init project
 var express = require('express');
 var app = express();
+var moment = require('moment');
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -25,26 +26,18 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get('/api/timestamp/:date_string', (req, res) => {
-  switch(typeof req.params.date_string) {
-    case "string":
-      if(req.params.date_string === "") {
-           var date = new Date();
-           res.json({"unix": date.getTime(), "utc": date.toUTCString()});
-         }else {
-           if(new Date(req.params.date_string) !== "Invalid Date") {
-              var date = new Date(req.params.date_string);
-              res.json({"unix": date.getTime(), "utc": date.toUTCString()});
-              }else {
-                res.json({"error" : "Invalid Date" });
-              }
-         }
-    case "number":
-      var date = new Date(req.params.date_string);
-      res.json({"unix": date.getTime(), "utc": date.toUTCString()});
-    default:
-      res.send("Input must be an integer or valid date string, pls follow the index's instruction");
-      break;
-         }
+  if(moment(req.params.date_string).isValid() !== 'Invalid date' ) {
+       var date = new Date(req.params.date_string);
+       res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+     }else {
+       if(parseInt(req.params.date_string) !== 'NaN') {
+          var date = parseInt(req.params.date_string);
+          date = moment(date).unix();
+          res.json({"unix": 11, "utc": 22});
+          }else {
+           res.send({"unix": 11, "utc": "Invalid Date"});
+          }
+     }
 });
 
 
